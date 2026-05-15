@@ -1,0 +1,34 @@
+# Hugo build output
+/public/
+/resources/
+/hugo_stats.json
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor configs
+.vscode/
+.idea/
+*.swp
+*~
+
+# Logs and temp files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# Dependency directories (if you ever add JS tooling)
+node_modules/
+
+# Cloudflare Pages and CI temp
+/.cache/
+
+# Optional local environment files
+.env
+.env.local
+.env.*.local
+
+# Ignore generated site manifest if built locally
+/public/**/CNAME
