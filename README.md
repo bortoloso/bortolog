@@ -96,3 +96,8 @@ O deploy do blog é feito no Cloudflare Pages. A configuração de build recomen
 - O tema PaperMod está configurado como submódulo Git em `themes/PaperMod`.
 - O arquivo `hugo.toml` contém a configuração principal do site, incluindo `baseURL`, idioma, taxonomias e parâmetros do tema.
 - O conteúdo do primeiro post e o tutorial de setup são um guia inicial para entender como o blog foi montado.
+
+## Licenças
+
+- **Conteúdo** (posts, textos, imagens): [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)
+- **Código** (templates, configurações): [MIT](LICENSE)
