@@ -133,18 +133,20 @@ pygmentsUseClasses = true
 
   # ---- Comentários --------------------------------------------------------
   # Requer configuração de um provider externo
-  comments = false
-  # [params.giscus]             # exemplo com Giscus (GitHub Discussions)
-  #   repo         = "bortoloso/bortolog.github.io"
-  #   repoId       = "..."
-  #   category     = "Announcements"
-  #   categoryId   = "..."
-  #   mapping      = "pathname"
-  #   strict       = "0"
-  #   reactionsEnabled = "1"
-  #   emitMetadata     = "0"
-  #   inputPosition    = "bottom"
-  #   theme            = "preferred_color_scheme"
+  comments = true
+  [params.giscus]
+    repo = "bortoloso/bortolog"
+    repoId = "R_kgDOSet8pA"
+    category = "Blog Comments"
+    categoryId = "DIC_kwDOSet8pM4C9LyN"
+    mapping = "pathname"
+    strict = "0"
+    reactionsEnabled = "1"
+    emitMetadata = "0"
+    inputPosition = "bottom"
+    theme = "light"
+    lang = "pt"
+    loading = "lazy"
 
   # ---- Link "sugerir edição" no rodapé do post ----------------------------
   # Com appendFilePath=true, gera link direto para editar o arquivo no GitHub
