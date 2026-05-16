@@ -1,2 +1,6 @@
 <link rel="manifest" href="/site.webmanifest">
 <meta name="theme-color" content="#111111">
+
+{{ if eq hugo.Environment "staging" }}
+<meta name="robots" content="noindex, nofollow">
+{{ end }}

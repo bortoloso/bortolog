@@ -1,0 +1,8 @@
+User-agent: *
+
+{{ if eq hugo.Environment "staging" }}
+Disallow: /
+{{ else }}
+Allow: /
+Sitemap: {{ "sitemap.xml" | absURL }}
+{{ end }}
