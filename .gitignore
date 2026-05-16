@@ -32,3 +32,6 @@ node_modules/
 
 # Ignore generated site manifest if built locally
 /public/**/CNAME
+
+# Lock file for Hugo build process
+.hugo_build.lock
