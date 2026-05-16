@@ -8,7 +8,17 @@
 (function () {
 
     function getTheme() {
-        return localStorage.getItem("pref-theme") || "light";
+        const storedTheme = localStorage.getItem("pref-theme");
+        if (storedTheme === "dark" || storedTheme === "light") {
+            return storedTheme;
+        }
+
+        const htmlTheme = document.documentElement.dataset.theme;
+        if (htmlTheme === "dark" || htmlTheme === "light") {
+            return htmlTheme;
+        }
+
+        return window.matchMedia('(prefers-color-scheme: dark)').matches ? "dark" : "light";
     }
 
     function renderGiscus() {
