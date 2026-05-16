@@ -17,7 +17,8 @@ Sumário rápido
 - Estrutura do repositório e convenções
 - Comandos para desenvolvimento local
 - Configuração do build e deploy no Cloudflare Pages
-- Dicas e pendências
+- Sistema de comentários com Giscus
+- Notas e decisões
 
 **Propósito**
 
@@ -126,7 +127,7 @@ No Cloudflare Pages, adicione o domínio `bortoloso.me` (você usa o seu, esse �
 
 Observações sobre `site.webmanifest` e favicons
 
-Coloque todos os ícones gerados (p.ex. pelo RealFaviconGenerator) dentro de `static/` e referencie-os em `layouts/partials/extend_head.html` (já feito neste projeto). Verifique que os arquivos referenciados em `static/site.webmanifest` existam em `static/`.
+Coloque todos os ícones gerados (p.ex. pelo RealFaviconGenerator) dentro de `static/` e referencie-os em `layouts/partials/extend_head.html`. Verifique que os arquivos referenciados em `static/site.webmanifest` existam em `static/`.
 
 `.gitignore` e arquivos a não versionar
 
@@ -157,25 +158,70 @@ git push origin main
 
 4. O Cloudflare Pages detecta o push, executa o build e publica o site automaticamente.
 
+Sistema de comentários com Giscus
+
+Para adicionar comentários ao blog, configurei o **Giscus** utilizando **GitHub Discussions** como backend. Isso oferece uma solução leve e moderna sem necessidade de banco de dados ou serviços pesados.
+
+### Pré-requisitos
+
+- Repositório público no GitHub com Discussions habilitada
+- Instalar o GitHub App do Giscus: https://github.com/apps/giscus
+- Criar uma categoria de discussions (exemplo: "Blog Comments")
+
+### Configuração no `hugo.toml`
+
+Adicione a configuração do Giscus aos parâmetros:
+
+```toml
+[params]
+comments = true
+
+[params.giscus]
+repo = "seu-usuario/seu-repo"
+repoId = "R_kgDOSet8pA"
+category = "Blog Comments"
+categoryId = "DIC_kwDOSet8pM4C9LyN"
+mapping = "pathname"
+strict = "0"
+reactionsEnabled = "1"
+emitMetadata = "0"
+inputPosition = "bottom"
+theme = "light"
+lang = "pt"
+loading = "lazy"
+```
+
+Os IDs podem ser gerados no configurador oficial: https://giscus.app/pt
+
+### Sincronização com o tema PaperMod
+
+Um ponto importante é sincronizar o tema do Giscus com o dark/light mode do PaperMod. O arquivo [layouts/partials/comments.html](https://github.com/bortoloso/bortolog/blob/main/layouts/partials/comments.html) implementa essa sincronização dinamicamente:
+
+- Lê o tema armazenado no `localStorage`
+- Monitora mudanças no toggle do PaperMod
+- Atualiza o Giscus via `postMessage` quando o tema muda
+- Funciona corretamente com `data-loading="lazy"`
+
+O partial renderiza o Giscus apenas se `comments = true` e a página não tenha `disableComments: true` no front matter.
+
+### Resultado
+
+Com essa configuração:
+
+- Comentários ficam versionados e armazenados no GitHub
+- Login é feito via conta GitHub
+- Suporte completo a Markdown
+- Reações (reactions) habilitadas
+- Tema sempre sincronizado com o blog
+- Moderação direta no GitHub Discussions
+
 Notas e decisões importantes que tomei
 
 - Usei `archetypes/posts/index.md` e o script `new-post.sh` para acelerar criação de posts.
 - Preferi não usar GitHub Pages: Cloudflare Pages oferece CDN global com preview e builds rápidos.
 - Mantive `env = "production"` no `hugo.toml` para ter metadados sociais corretos.
-- Optei por `pygmentsUseClasses = true` e `disableHLJS = true` para usar Chroma, evitando JS extra para highlight.
-
-Pendências e próximos passos
-
-- Gerar e incluir favicons completos via RealFaviconGenerator e confirmar caminhos em `params.assets`.
-- Verificar se o build do Cloudflare está usando Hugo Extended (se precisar de processamento SCSS/ imagens responsivas).
-- Avaliar adicionar `CNAME` ou configuração de DNS definitiva para `bortoloso.me` quando o domínio estiver pronto.
-- Considerar habilitar `ShowShareButtons` ou sistema de comentários (Giscus) se desejar interação.
-
-Se quiser, eu posso:
-- adicionar um arquivo `README.md` com instruções de deploy automático para Cloudflare Pages;
-- transformar o submódulo em cópia direta do tema (se preferir evitar submódulos);
-- criar o `CNAME` no repositório `public/` caso prefira gerenciar DNS via Git.
-- Principalmente, validar este post... porque escrevi ele mas especificamente este projeto mesmo ainda não foi nem commitado, nem incluído no cloudflare pages, então é um YOLO de post que vou atualizar depois... só os fortes verão isso pq vou atualizar o post depois.
+- Optei por `pygmentsUseClasses = true` para usar Chroma via classes, evitando JS extra para highlight.
+- Implementei Giscus com sincronização dinâmica de tema: o sistema de comentários acompanha o dark/light mode do blog em tempo real.
 
 ---
 Publicado em 2026-05-15 — Borto
