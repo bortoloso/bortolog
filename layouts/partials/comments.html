@@ -1,0 +1,76 @@
+{{ if and .Site.Params.comments (not .Params.disableComments) }}
+
+{{ $giscus := .Site.Params.giscus }}
+
+<div id="giscus-container"></div>
+
+<script>
+(function () {
+
+    function getTheme() {
+        return localStorage.getItem("pref-theme") || "light";
+    }
+
+    function renderGiscus() {
+        const container = document.getElementById("giscus-container");
+
+        if (!container || container.hasChildNodes()) return;
+
+        const script = document.createElement("script");
+
+        script.src = "https://giscus.app/client.js";
+        script.async = true;
+        script.crossOrigin = "anonymous";
+
+        script.setAttribute("data-repo", "{{ $giscus.repo }}");
+        script.setAttribute("data-repo-id", "{{ $giscus.repoId }}");
+        script.setAttribute("data-category", "{{ $giscus.category }}");
+        script.setAttribute("data-category-id", "{{ $giscus.categoryId }}");
+        script.setAttribute("data-mapping", "{{ $giscus.mapping }}");
+        script.setAttribute("data-strict", "{{ $giscus.strict }}");
+        script.setAttribute("data-reactions-enabled", "{{ $giscus.reactionsEnabled }}");
+        script.setAttribute("data-emit-metadata", "{{ $giscus.emitMetadata }}");
+        script.setAttribute("data-input-position", "{{ $giscus.inputPosition }}");
+
+        // tema correto na renderização inicial
+        script.setAttribute("data-theme", getTheme());
+
+        script.setAttribute("data-lang", "{{ $giscus.lang }}");
+        script.setAttribute("data-loading", "{{ $giscus.loading }}");
+
+        container.appendChild(script);
+    }
+
+    function updateGiscusTheme() {
+        const iframe = document.querySelector("iframe.giscus-frame");
+
+        if (!iframe) return;
+
+        iframe.contentWindow.postMessage(
+            {
+                giscus: {
+                    setConfig: {
+                        theme: getTheme()
+                    }
+                }
+            },
+            "https://giscus.app"
+        );
+    }
+
+    // renderiza imediatamente
+    renderGiscus();
+
+    // sincroniza após troca de tema
+    document.addEventListener("click", function (e) {
+        const toggle = e.target.closest("#theme-toggle");
+
+        if (!toggle) return;
+
+        setTimeout(updateGiscusTheme, 150);
+    });
+
+})();
+</script>
+
+{{ end }}
