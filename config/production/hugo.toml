@@ -214,8 +214,8 @@ pygmentsUseClasses = true
   keys = ["title", "permalink", "summary", "content"]
 
 # ---- Analytics (verificação de propriedade — Search Console) ---------------
-# [params.analytics.google]
-#   SiteVerificationTag = "XXXX"
+[params.analytics.google]
+  SiteVerificationTag = "FRegLlIj8TN_YeCmxnJxf2sNCtNECa46ztIFpBwFK-w"
 
 # ==============================================================================
 # MENU PRINCIPAL
