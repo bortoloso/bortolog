@@ -7,11 +7,19 @@ slug: "setup-inicial"
 description: "Documentação do processo inicial de configuração do blog BORTO.LOG: Hugo, PaperMod, GitHub e Cloudflare Pages."
 tags: ["hugo","papermod","cloudflare","deploy","git","setup"]
 categories: ["infra","dev"]
+series: ["Construindo este Blog"]
+showToc: true
+TocOpen: false
+cover:
+  image: "/images/cover.png"       # nome do arquivo de imagem na mesma pasta, ex: "cover.png", mas aqui usei a default do site
+  alt: "Imagem padrão do Blog"
+  caption: "Esta será a imagem padrão para o Blog"
 ---
 
 Este post documenta, passo a passo, como configurei o blog BORTO.LOG até o momento. Serve como referência para mim e para quem quiser reproduzir a mesma stack: Hugo + tema PaperMod, versionado no GitHub, publicado via Cloudflare Pages.
 
-Sumário rápido
+## Sumário rápido
+
 - Propósito e decisão da stack
 - Pré-requisitos
 - Estrutura do repositório e convenções
@@ -20,23 +28,25 @@ Sumário rápido
 - Sistema de comentários com Giscus
 - Notas e decisões
 
-**Propósito**
+## Propósito
 
 Criei este blog como um caderno técnico pessoal: anotações, tutoriais, experimentos e documentação do meu dia a dia como engenheiro/desenvolvedor. Precisei de algo rápido para gerar HTML estático, com suporte a temas modernos, boa performance e sem dependências pesadas, por isso escolhi Hugo =)... e por outras razões pessoais.
 
-Por que Hugo + PaperMod + Cloudflare Pages
-- Hugo: binário único, build muito rápido, sistema de Page Bundles e suporte a processamento de imagens. Quando usar SCSS/asset pipeline, prefira a versão Extended.
+### Por que Hugo + PaperMod + Cloudflare Pages
+
+- Hugo: binário único, build muito rápido, sistema de Page Bundles e suporte a processamento de imagens. Quando usar SCSS/asset pipeline, prefira a versão Extended (Cloudflare Pages já usa versão Extended).
 - PaperMod: tema minimalista, suporte a dark/light, busca client-side com Fuse.js, muitas convenções prontas para blogs técnicos.
 - Cloudflare Pages: CDN global, deploy por push no GitHub, preview por PR e plano gratuito com SSL automático.
 
-Pré-requisitos
+## Pré-requisitos
+
 - Git (com suporte a submódulos)
 - Conta no GitHub com repositório público (ou privado com Pages/Cloudflare configurado)
 - Conta no Cloudflare
-- Hugo (recomendo a versão latest ou especificar `HUGO_VERSION` no Pages)
+- Hugo (recomendo a versão mais recente ou especificar `HUGO_VERSION` no Pages)
 - Opcional: Hugo Extended (se usar SCSS ou processamento avançado de imagens)
 
-Estrutura do repositório (resumo)
+## Estrutura do repositório e convenções
 
 ```
 .
@@ -51,7 +61,8 @@ Estrutura do repositório (resumo)
 └── .gitignore
 ```
 
-Principais configurações no `hugo.toml` que uso neste projeto
+### Principais configurações no `hugo.toml`
+
 - `baseURL = "https://bortoloso.me/"`
 - `theme = "PaperMod"`
 - `defaultContentLanguage = "pt"`
@@ -59,20 +70,20 @@ Principais configurações no `hugo.toml` que uso neste projeto
 - `pygmentsUseClasses = true` e `markup.highlight.noClasses = false` para usar Chroma
 - `[params].env = "production"` para ativar metatags sociais do PaperMod
 
-Submódulo do tema
+### Submódulo do tema
 
 O tema PaperMod está como submódulo Git (`themes/PaperMod`), mantido por `.gitmodules`. No ambiente de build precisamos inicializá-lo.
 
-Comandos úteis — desenvolvimento local
+## Comandos para desenvolvimento local
 
-- Iniciar servidor de dev (hot reload):
+### Iniciar servidor de dev
 
 ```bash
 hugo server -D
 # Acesse: http://localhost:1313
 ```
 
-- Criar um novo post (uso o script `new-post.sh` ou o archetype do Hugo):
+### Criar um novo post
 
 ```bash
 ./new-post.sh nome-do-post
@@ -80,19 +91,19 @@ hugo server -D
 hugo new posts/nome-do-post/index.md
 ```
 
-- Atualizar submódulos localmente (quando clonar o repo):
+### Atualizar submódulos localmente
 
 ```bash
 git submodule update --init --recursive
 ```
 
-- Build de produção (gera `public/`):
+### Build de produção
 
 ```bash
 hugo --gc --minify
 ```
 
-- Testar o `public/` localmente (servidor simples):
+### Testar o `public/` localmente
 
 ```bash
 cd public
@@ -100,36 +111,41 @@ python3 -m http.server 8000
 # Acesse: http://localhost:8000
 ```
 
-Configuração recomendada para Cloudflare Pages
+## Configuração do build e deploy no Cloudflare Pages
 
 No painel do Cloudflare Pages, ao criar o projeto conectado ao GitHub, use estas opções:
 
 - Branch: `main`
-- Build command:
+
+### Build command
 
 ```bash
 git submodule update --init --recursive && hugo --gc --minify
 ```
 
-- Output directory: `public`
+### Output directory
 
-Variáveis de ambiente úteis (opcionais):
-- `HUGO_VERSION` — definir a versão do Hugo para tornar o build reprodutível
-- Se usar Extended: definir `HUGO_VERSION` para uma versão Extended disponível na imagem
+`public`
 
-Porque esse comando?
+### Variáveis de ambiente úteis (opcionais)
+
+- `HUGO_VERSION` - definir a versão do Hugo para tornar o build reprodutível
+- Se usar Extended: defina `HUGO_VERSION` para uma versão Extended disponível na imagem
+
+### Por que esse comando?
+
 - `git submodule update --init --recursive` garante que o tema PaperMod (submódulo) esteja disponível durante o build.
 - `hugo --gc --minify` gera o site otimizado e pronto para entrega.
 
-Domínio customizado e SSL
+## Domínio customizado e SSL
 
 No Cloudflare Pages, adicione o domínio `bortoloso.me` (você usa o seu, esse é meu hehe) como custom domain no projeto Pages. O Cloudflare gerencia o SSL automaticamente. Se necessário, aponte os registros DNS conforme instruções do Pages (geralmente CNAME/ALIAS apontando para o domínio do Pages).
 
-Observações sobre `site.webmanifest` e favicons
+## Observações sobre `site.webmanifest` e favicons
 
 Coloque todos os ícones gerados (p.ex. pelo RealFaviconGenerator) dentro de `static/` e referencie-os em `layouts/partials/extend_head.html`. Verifique que os arquivos referenciados em `static/site.webmanifest` existam em `static/`.
 
-`.gitignore` e arquivos a não versionar
+## `.gitignore` e arquivos a não versionar
 
 Recomendo ignorar a saída de build e caches:
 
@@ -144,7 +160,7 @@ node_modules/
 
 Importante: não ignore `themes/PaperMod` se você converter o submódulo em diretório, mas mantenha-o como submódulo se quiser acompanhar upstream do PaperMod.
 
-Fluxo de publicação (resumido)
+## Fluxo de publicação
 
 1. Criar/editar post localmente (usar `hugo server -D` para validar).
 2. Confirmar `draft: false` no front matter quando pronto.
@@ -158,7 +174,7 @@ git push origin main
 
 4. O Cloudflare Pages detecta o push, executa o build e publica o site automaticamente.
 
-Sistema de comentários com Giscus
+## Sistema de comentários com Giscus
 
 Para adicionar comentários ao blog, configurei o **Giscus** utilizando **GitHub Discussions** como backend. Isso oferece uma solução leve e moderna sem necessidade de banco de dados ou serviços pesados.
 
@@ -191,7 +207,7 @@ lang = "pt"
 loading = "lazy"
 ```
 
-Os IDs podem ser gerados no configurador oficial: https://giscus.app/pt
+Os IDs podem ser gerados no configurador oficial: https://giscus.app/pt e depois usados no formato TOML.
 
 ### Sincronização com o tema PaperMod
 
@@ -204,6 +220,8 @@ Um ponto importante é sincronizar o tema do Giscus com o dark/light mode do Pap
 
 O partial renderiza o Giscus apenas se `comments = true` e a página não tenha `disableComments: true` no front matter.
 
+_A configuração padrão do Giscus não acompanhava a troca de tema do PaperMod; o partial acima resolve esse problema._
+
 ### Resultado
 
 Com essa configuração:
@@ -215,13 +233,12 @@ Com essa configuração:
 - Tema sempre sincronizado com o blog
 - Moderação direta no GitHub Discussions
 
-Notas e decisões importantes que tomei
+## Notas e decisões importantes
 
 - Usei `archetypes/posts/index.md` e o script `new-post.sh` para acelerar criação de posts.
 - Preferi não usar GitHub Pages: Cloudflare Pages oferece CDN global com preview e builds rápidos.
 - Mantive `env = "production"` no `hugo.toml` para ter metadados sociais corretos.
 - Optei por `pygmentsUseClasses = true` para usar Chroma via classes, evitando JS extra para highlight.
-- Implementei Giscus com sincronização dinâmica de tema: o sistema de comentários acompanha o dark/light mode do blog em tempo real.
+- Implementei Giscus com sincronização dinâmica de tema: o sistema de comentários acompanha o dark/light mode do blog em tempo real. (Sobre o Giscus, escrevo outro post em breve.)
 
 ---
-Publicado em 2026-05-15 — Borto
