@@ -221,16 +221,17 @@ pygmentsUseClasses = true
 # MENU PRINCIPAL
 # ==============================================================================
 
+
+[[menus.main]]
+  identifier = "busca"
+  name       = "Busca"
+  url        = "/search/"
+  weight     = 10
+
 [[menus.main]]
   identifier = "posts"
   name       = "Posts"
   url        = "/posts/"
-  weight     = 10
-
-[[menus.main]]
-  identifier = "series"
-  name       = "Series"
-  url        = "/series/"
   weight     = 20
 
 [[menus.main]]
@@ -246,13 +247,19 @@ pygmentsUseClasses = true
   weight     = 40
 
 [[menus.main]]
-  identifier = "arquivo"
-  name       = "Arquivo"
-  url        = "/archives/"
+  identifier = "series"
+  name       = "Séries"
+  url        = "/series/"
   weight     = 50
 
 [[menus.main]]
-  identifier = "busca"
-  name       = "Busca"
-  url        = "/search/"
+  identifier = "arquivo"
+  name       = "Arquivo"
+  url        = "/archives/"
   weight     = 60
+
+# [[menus.main]]
+#   identifier = "about"
+#   name       = "Sobre"
+#   url        = "/about/"
+#   weight     = 70
