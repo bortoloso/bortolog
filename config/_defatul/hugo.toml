@@ -234,19 +234,25 @@ pygmentsUseClasses = true
   weight     = 20
 
 [[menus.main]]
+  identifier = "categories"
+  name       = "Categorias"
+  url        = "/categories/"
+  weight     = 30
+
+[[menus.main]]
   identifier = "tags"
   name       = "Tags"
   url        = "/tags/"
-  weight     = 30
+  weight     = 40
 
 [[menus.main]]
   identifier = "arquivo"
   name       = "Arquivo"
   url        = "/archives/"
-  weight     = 40
+  weight     = 50
 
 [[menus.main]]
   identifier = "busca"
   name       = "Busca"
   url        = "/search/"
-  weight     = 50
+  weight     = 60
