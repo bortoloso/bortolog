@@ -1,5 +1,5 @@
 # ==============================================================================
-# BORTO.LOG — hugo.toml
+# BORTO.LOG - hugo.toml
 # ==============================================================================
 
 # baseURL = "https://bortoloso.me/"
@@ -10,7 +10,7 @@ theme   = "PaperMod"
 defaultContentLanguage = "pt"
 languageCode           = "pt-BR"
 
-# Paginação — posts por página nas listagens
+# Paginação - posts por página nas listagens
 [pagination]
   pagerSize = 10
 
@@ -22,7 +22,7 @@ buildExpired = false
 # Gera /robots.txt automaticamente (necessário para SEO)
 enableRobotsTXT = true
 
-# Gera permalinks com trailing slash — consistência com Cloudflare Pages
+# Gera permalinks com trailing slash - consistência com Cloudflare Pages
 # e evita redirects desnecessários
 canonifyURLs = false
 
@@ -43,7 +43,7 @@ enableGitInfo = false
   strikethrough  = true
   table          = true
   taskList       = true
-  typographer    = true  # converte "..." em … e "--" em —
+  typographer    = true  # converte "..." em … e "--" em -
 
 # Syntax highlighting via Chroma (nativo do Hugo, sem JS extra)
 # pygmentsUseClasses obrigatório para o PaperMod controlar as cores via CSS
@@ -53,18 +53,18 @@ pygmentsUseClasses = true
   noClasses      = false   # deve ser false quando pygmentsUseClasses = true
   codeFences     = true    # habilita blocos ```codigo```
   guessSyntax    = true    # tenta detectar a linguagem automaticamente
-  lineNos        = false   # números de linha — descomentar para ativar
+  lineNos        = false   # números de linha - descomentar para ativar
   # lineNumbersInTable = true  # números de linha em tabela separada (mais bonito)
   # anchorLineNos = true       # linhas clicáveis via âncora (#L42)
   # style = "monokai"          # ignorado quando noClasses=false; PaperMod controla as cores
 
-# Minificação do output — reduz tamanho do HTML/CSS/JS gerado
+# Minificação do output - reduz tamanho do HTML/CSS/JS gerado
 [minify]
-  disableXML    = true   # não minifica XML — evita quebrar o feed RSS
+  disableXML    = true   # não minifica XML - evita quebrar o feed RSS
   minifyOutput  = true
 
 # ------------------------------------------------------------------------------
-# OUTPUTS — necessário para busca (JSON) e RSS
+# OUTPUTS - necessário para busca (JSON) e RSS
 # ------------------------------------------------------------------------------
 [outputs]
   home    = ["HTML", "RSS", "JSON"]  # JSON obrigatório para o Fuse.js funcionar
@@ -83,14 +83,14 @@ pygmentsUseClasses = true
 # PARÂMETROS DO PAPERMOD
 # ------------------------------------------------------------------------------
 [params]
-  # Ambiente — ativa OpenGraph, Twitter Cards, Schema.org e Google Analytics
+  # Ambiente - ativa OpenGraph, Twitter Cards, Schema.org e Google Analytics
   # OBRIGATÓRIO para meta tags de redes sociais funcionarem
   # env = "production"
 
   # Descrição padrão do site (usada como og:description nas páginas sem descrição própria)
   description = "Blog sobre tecnologia, desenvolvimento e infraestrutura."
 
-  # Autor padrão — pode ser sobrescrito por post no front matter
+  # Autor padrão - pode ser sobrescrito por post no front matter
   author = "Borto"
   # author = ["Borto", "Outro"]  # múltiplos autores
 
@@ -163,7 +163,7 @@ pygmentsUseClasses = true
   hiddenInSingle = false  # exibe dentro do post individual
   responsiveImages = true  # gera versões responsivas da capa (requer Hugo Extended)
 
-# ---- Página inicial — bloco de boas-vindas --------------------------------
+# ---- Página inicial - bloco de boas-vindas --------------------------------
 [params.homeInfoParams]
   Title   = "Borto.log"
   Content = "Notas sobre tecnologia, desenvolvimento e infraestrutura."
@@ -186,7 +186,7 @@ pygmentsUseClasses = true
 # Gerar todos os tamanhos em: realfavicongenerator.net ou favicon.io/favicon-generator/
 # Colocar os arquivos em /static/ e ajustar os caminhos abaixo
 [params.assets]
-  disableHLJS = true  # desativa highlight.js — usa Chroma nativo (mais rápido)
+  disableHLJS = true  # desativa highlight.js - usa Chroma nativo (mais rápido)
   # disableFingerprinting = false  # true = desativa cache busting nos assets
 
   favicon            = "/favicon.ico"
@@ -201,19 +201,19 @@ pygmentsUseClasses = true
   icon = "/apple-touch-icon.png"
   iconHeight = 35
 
-# ---- Busca — Fuse.js -------------------------------------------------------
+# ---- Busca - Fuse.js -------------------------------------------------------
 # Documentação completa: https://fusejs.io/api/options.html
 [params.fuseOpts]
   isCaseSensitive = false
   shouldSort      = true
   location        = 0
   distance        = 1000       # busca no conteúdo completo do post
-  threshold       = 0.4        # tolerância a erros — 0.0=exato, 1.0=qualquer coisa
+  threshold       = 0.4        # tolerância a erros - 0.0=exato, 1.0=qualquer coisa
   minMatchCharLength = 2       # mínimo de caracteres para retornar resultado
   limit           = 10         # máximo de resultados
   keys = ["title", "permalink", "summary", "content"]
 
-# ---- Analytics (verificação de propriedade — Search Console) ---------------
+# ---- Analytics (verificação de propriedade - Search Console) ---------------
 # [params.analytics.google]
 #   SiteVerificationTag = "XXXX"
 
