@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# new-post.sh — cria um novo post como Page Bundle
+# new-post.sh - cria um novo post como Page Bundle
 # Uso: ./new-post.sh "meu-post-sobre-algo"
 # Com prefixo numérico para series: ./new-post.sh "git-01-conceitos-basicos"
 
@@ -13,7 +13,7 @@ fi
 
 SLUG="$1"
 
-hugo new "posts/${SLUG}/index.md"
+hugo new --kind index "posts/${SLUG}/index.md"
 
 echo ""
 echo "✅ Post criado em: content/posts/${SLUG}/index.md"
