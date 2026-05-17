@@ -150,10 +150,10 @@ pygmentsUseClasses = true
 
   # ---- Link "sugerir edição" no rodapé do post ----------------------------
   # Com appendFilePath=true, gera link direto para editar o arquivo no GitHub
-  # [params.editPost]
-  #   URL            = "https://github.com/bortoloso/bortolog.github.io/blob/main/content"
-  #   Text           = "Sugerir edição"
-  #   appendFilePath = true
+  [params.editPost]
+    URL            = "https://github.com/bortoloso/bortolog/blob/main/content"
+    Text           = "Sugerir edição"
+    appendFilePath = true
 
 # ---- Capa dos posts -------------------------------------------------------
 [params.cover]
