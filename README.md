@@ -42,35 +42,58 @@ git clone https://github.com/bortoloso/bortolog.git
 cd bortolog
 ```
 
-2. Inicialize os submódulos:
+2. Inicialize os submódulos (tema PaperMod é submódulo):
 
 ```bash
 git submodule update --init --recursive
 ```
 
-3. Inicie o servidor de desenvolvimento Hugo:
+3. Inicie o servidor de desenvolvimento (inclui drafts):
 
 ```bash
 hugo server -D
 ```
 
-4. Acesse no navegador:
+4. Inicie o servidor de desenvolvimento com um ambiente específico (opcional):
+
+```bash
+hugo server -D --environment staging
+# ou
+hugo server -D --environment production
+```
+
+5. Acesse no navegador:
 
 ```text
 http://localhost:1313
 ```
 
-## Como gerar o site para produção
-
-No repositório, rode:
+6. Criar um novo post como Page Bundle usando o archetype `archetypes/index.md`:
 
 ```bash
-hugo --gc --minify
+./new-post.sh "meu-post-slug"
+# cria content/posts/meu-post-slug/index.md usando o archetype index
+```
+
+Coloque imagens e outros recursos dentro da pasta do post (ex: `content/posts/meu-post-slug/`).
+
+## Como gerar o site para produção (e staging)
+
+1. Build para produção:
+
+```bash
+hugo --environment production --gc --minify
+```
+
+2. Build para staging:
+
+```bash
+hugo --environment staging --gc --minify
 ```
 
 O site gerado ficará em `public/`.
 
-Para testar a versão de produção localmente:
+Para testar a versão gerada localmente:
 
 ```bash
 cd public
@@ -81,6 +104,18 @@ E acesse:
 
 ```text
 http://localhost:8000
+```
+
+3. Observações sobre deploy (Cloudflare Pages):
+
+- Branch `main` → build com `--environment production`
+- Branch `staging` → build com `--environment staging`
+- Outros branches → build falha intencionalmente (proteção contra deploys acidentais)
+
+Exemplo do comando de build usado pelo Cloudflare Pages (script shell precisa ser em uma linha Cloudflare remove quebras de linha):
+
+```bash
+git submodule update --init --recursive && echo "Branch=$CF_PAGES_BRANCH"; if [ "$CF_PAGES_BRANCH" = "main" ]; then echo "ENV=production"; hugo --environment production --gc --minify; elif [ "$CF_PAGES_BRANCH" = "staging" ]; then echo "ENV=staging"; hugo --environment staging --gc --minify; else echo "ERROR: unsupported branch '$CF_PAGES_BRANCH'"; exit 1; fi
 ```
 
 ## Notas de deploy
